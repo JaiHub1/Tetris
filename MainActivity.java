@@ -49,19 +49,19 @@ public class MainActivity extends AppCompatActivity {
         relativeTetris.addView(juego);
         jugar.setOnClickListener(new View.OnClickListener()
           {
-              int tmp=0;
+              int var =0;
               @Override
               public void onClick(View v) {
                   pararpantalla = pantalla.getCurrentPosition();
-                  tmp++;
+                  var++;
 
                   if(jugar.getText().equals("jugar")) {
                       pausar = false;
 
-                      if(tmp==1) {
+                      if(var ==1) {
                           pantalla.start();
                           pantalla.setLooping(true);
-                      } else if(tmp>1) {
+                      } else if(var >1) {
                           pantalla.seekTo(pararpantalla);
                           pantalla.start();
                       }

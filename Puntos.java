@@ -9,7 +9,7 @@ public class Puntos {
     public Puntos(Context context) {
         mainActivity = (MainActivity) context;
     }
-    public void setPuntosac(int currentPoints) {
+    public void setPuntosac(int puntosac) {
         this.puntosac = puntosac;
     }
 

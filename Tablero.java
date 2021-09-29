@@ -21,7 +21,7 @@ public class Tablero {
     }
 
     /*
-    color de las figuras y la tablajuego cell
+    color de las figuras y el tablero
      */
 
     public int codeToColor(int x, int y) {
@@ -38,7 +38,7 @@ public class Tablero {
         return -1;
     }
 
-    public void clearGameBoard() {
+    public void limpiartabla() {
         for(int i=0; i<boardHeight; i++) {
             for(int j=0; j<boardWidth; j++) {
                 tablajuego[i][j]= 0;
@@ -65,24 +65,18 @@ public class Tablero {
         tablajuego[currentPiece.x4][currentPiece.y4] = currentPiece.figura;
     }
 
-    private void deletePiece(figuras currentPiece) {
+    private void borrarp(figuras currentPiece) {
         tablajuego[currentPiece.x1][currentPiece.y1] = 0;
         tablajuego[currentPiece.x2][currentPiece.y2] = 0;
         tablajuego[currentPiece.x3][currentPiece.y3] = 0;
         tablajuego[currentPiece.x4][currentPiece.y4] = 0;
     }
 
-    /*
-    checks if Piece can move in direction x|y
-    copy Piece and try to move it, return true
-    if it can move
-     */
+    //comprobar si se puede girar
 
-    private boolean piece_Can_Move(figuras currentPiece, int x, int y) {
+    private boolean mover(figuras currentPiece, int x, int y) {
         int tmp =0;
-        /*
-        copy piece coordinates
-         */
+       //guardar coordenadas
         Point p1 = new Point(currentPiece.x1, currentPiece.y1);
         Point p2 = new Point(currentPiece.x2, currentPiece.y2);
         Point p3 = new Point(currentPiece.x3, currentPiece.y3);
@@ -118,13 +112,10 @@ public class Tablero {
         return false;
     }
 
-     /*
-     copy current Piece and check if it can rotate
-     if true return true
-      */
+    //revisa si puede rotar = true
 
     private boolean piece_Can_Rotate(figuras currentPiece) {
-        int tmp =0;
+        int var =0;
         ArrayList<Point> tmpPieceCoordinates = new ArrayList<Point>();
 
         figuras tmpStein = new figuras(currentPiece);
@@ -134,7 +125,7 @@ public class Tablero {
         Point p3 = new Point(currentPiece.x3, currentPiece.y3);
         Point p4 = new Point(currentPiece.x4, currentPiece.y4);
 
-        tmpStein.turnPiece();
+        tmpStein.girarfigura();
 
         Point tmp1 = new Point(tmpStein.x1, tmpStein.y1);
         Point tmp2 = new Point(tmpStein.x2, tmpStein.y2);
@@ -149,36 +140,36 @@ public class Tablero {
         for(Point p : tmpPieceCoordinates  ) {
 
             if(p.x< boardHeight && p.x>=0 && p.y>=0 && p.y< boardWidth && tablajuego[p.x][p.y]==0) {
-                tmp++;
+                var++;
             }
 
             else if(p.equals(p1) || p.equals(p2) || p.equals(p3) || p.equals(p4)) {
-                tmp++;
+                var++;
             }
         }
 
-        if(tmp==4) {  /* all four little squares are correct*/
+        if(var ==4) {  //los cuatro cuadrados son correctos
             return true;
         }
         return false;
     }
 
-    private  boolean can_Move_Left(figuras currentPiece) {
-        if(piece_Can_Move(currentPiece, 0, -1)==true) {
+    private  boolean moverizq(figuras currentPiece) {
+        if(mover(currentPiece, 0, -1)==true) {
             return true;
         }
         return false;
     }
 
-    private boolean can_Move_Right(figuras currentPiece){
-        if(piece_Can_Move(currentPiece, 0,1) == true) {
+    private boolean moverderecha(figuras currentPiece){
+        if(mover(currentPiece, 0,1) == true) {
             return true;
         }
         return false;
     }
 
-    public boolean can_Move_Down(figuras currentPiece) {
-        if(piece_Can_Move(currentPiece, 1,0)==true) {
+    public boolean moverabaj(figuras currentPiece) {
+        if(mover(currentPiece, 1,0)==true) {
             return true;
         }
         return false;
@@ -186,75 +177,66 @@ public class Tablero {
 
 
     private void movePiece(figuras currentPiece, int x, int y)   {
-        deletePiece(currentPiece);
+        borrarp(currentPiece);
         currentPiece.move(x, y);
         placePiece(currentPiece);
     }
 
-    public void moveRight(figuras currentPiece){
-        if(can_Move_Right(currentPiece)==true) {
+    public void moverD(figuras currentPiece){
+        if(moverderecha(currentPiece)==true) {
             movePiece(currentPiece, 0, 1);
         }
     }
 
-    public  void moveLeft(figuras currentPiece){
-        if(can_Move_Left(currentPiece)==true) {
+    public  void moverIz(figuras currentPiece){
+        if(moverizq(currentPiece)==true) {
             movePiece(currentPiece, 0, -1);
         }
     }
 
-    public  void moveDown(figuras currentPiece) {
-        if(can_Move_Down(currentPiece)==true) {
+    public  void movera(figuras currentPiece) {
+        if(moverabaj(currentPiece)==true) {
             movePiece(currentPiece, 1, 0);
         }
     }
 
-    public void fastDrop(figuras currentPiece) {
-        deletePiece(currentPiece);
 
-        while(can_Move_Down(currentPiece)==true) {
-            moveDown(currentPiece);
-        }
-        placePiece(currentPiece);
-    }
 
-    /*
-    turn all pieces until square piece
-     */
 
-    public void rotatePiece(figuras currentPiece) {
+
+    public void rotar(figuras currentPiece) {
 
         if(piece_Can_Rotate(currentPiece)==true && currentPiece.figura !=1) {
-            deletePiece(currentPiece);
-            currentPiece.turnPiece();
+            borrarp(currentPiece);
+            currentPiece.girarfigura();
             placePiece(currentPiece);
         }
         placePiece(currentPiece);
     }
 
-    public int clearRows() {
+    public int limpiarf() {
 
-        int deletedRowIndex;
-        int deletedRows=0;
+        int eliminarf;
+        int contador =0;
         ArrayList<Integer> arrayList = new ArrayList<Integer>();
 
         for (int i = 0; i < boardHeight; i++) {
             for (int j = boardWidth - 1; j >= 0; j--) {
 
-                if (tablajuego[i][j]==0) { // Row not full
+                if (tablajuego[i][j]==0) {
                     break;
                 }
                 if (j == 0) {
-                    deletedRowIndex = i;
-                    arrayList.add(deletedRowIndex);
-                    deletedRows++;
-                    deleteRow(deletedRowIndex);
+                    eliminarf = i;
+                    arrayList.add(eliminarf);
+                    contador++;
+                    eliminarfila(eliminarf);
                 }
             }
         }
 
-        if (deletedRows >= 1) {
-            int highestRow = Collections.min(arrayList); // highest Row which can be cleared
+        if (contador >= 1) {
+            int highestRow = Collections.min(arrayList);
             int[][] gameBoardCopy = new int[highestRow][boardWidth];
 
             for (int i = 0; i < gameBoardCopy.length; i++) {
@@ -265,21 +247,21 @@ public class Tablero {
 
             for (int i = 0; i < gameBoardCopy.length; i++) {
                 for (int j = 0; j < gameBoardCopy[1].length; j++) {
-                    tablajuego[i+deletedRows][j] = gameBoardCopy[i][j];
+                    tablajuego[i+ contador][j] = gameBoardCopy[i][j];
                 }
             }
         }
-        return deletedRows;
+        return contador;
     }
 
-    public void deleteRow(int r){
+    public void eliminarfila(int r){
         for (int i = 0; i < boardWidth; i++) {
             tablajuego[r][i] =0;
         }
     }
 
-    public boolean checklose(figuras spielStein) {
-        if(can_Move_Down(spielStein) == false && spielStein.getMinXCoordinate(
+    public boolean fingame(figuras spielStein) {
+        if(moverabaj(spielStein) == false && spielStein.getMinXCoordinate(
                 spielStein.x1, spielStein.x2, spielStein.x3, spielStein.x4)<=1) {
             return true;
         }

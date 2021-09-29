@@ -22,8 +22,9 @@ public class figuras {
 
 
     public figuras(int formas) {
-        switch (formas) { // Square
-            case 1:
+        switch (formas) {
+       //cuadrado
+                case 1:
                 x1 = 0; y1 = 7;
                 x2 = 0; y2 = 8;
                 x3 = 1; y3 = 7;
@@ -31,8 +32,8 @@ public class figuras {
 
                 figura = 1;
                 break;
-
-            case 2:    // z Piece
+            //z
+            case 2:
                 x1 = 0;y1 = 7;
                 x2 = 0;y2 = 8;
                 x3 = 1;y3 = 8;
@@ -40,8 +41,8 @@ public class figuras {
 
                 figura = 2;
                 break;
-
-            case 3: // I Piece
+            //l
+            case 3:
                 x1 = 0;y1 = 6;
                 x2 = 0;y2 = 7;
                 x3 = 0;y3 = 8;
@@ -49,8 +50,8 @@ public class figuras {
 
                 figura = 3;
                 break;
-
-            case 4: // T Piece
+            // T
+            case 4:
                 x1 = 0;y1 = 8;
                 x2 = 1;y2 = 7;
                 x3 = 1;y3 = 8;
@@ -59,8 +60,8 @@ public class figuras {
                 figura = 4;
                 break;
 
-
-            case 6:  // J Piece
+            //j
+            case 6:
                 x1 = 0;y1 = 7;
                 x2 = 0;y2 = 8;
                 x3 = 0;y3 = 9;
@@ -68,8 +69,8 @@ public class figuras {
 
                 figura = 6;
                 break;
-
-            case 7:  //  L Piece
+            //L
+            case 7:
                 x1 = 0;y1 = 7;
                 x2 = 0;y2 = 8;
                 x3 = 0;y3 = 9;
@@ -91,35 +92,33 @@ public class figuras {
         y4 = y4 + y;
     }
 
-   /*
-   turns piece around x1|y1 coordinates
-    */
-    public void turnPiece() {
+   //gira alrededor de x y Y
+    public void girarfigura() {
         int tmp_x1, tmp_y1;
         int tmp_x2, tmp_y2;
         int tmp_x3, tmp_y3;
 
-        tmp_x1 = turn_AroundX1(y2);
-        tmp_y1 = turn_AroundY1(x2);
+        tmp_x1 = girarx(y2);
+        tmp_y1 = girary(x2);
         x2 = tmp_x1;
         y2 = tmp_y1;
 
-        tmp_x2 = turn_AroundX1(y3);
-        tmp_y2 = turn_AroundY1(x3);
+        tmp_x2 = girarx(y3);
+        tmp_y2 = girary(x3);
         x3 = tmp_x2;
         y3 = tmp_y2;
 
-        tmp_x3 = turn_AroundX1(y4);
-        tmp_y3 = turn_AroundY1(x4);
+        tmp_x3 = girarx(y4);
+        tmp_y3 = girary(x4);
         x4 = tmp_x3;
         y4 = tmp_y3;
     }
 
-    public int turn_AroundX1(int y) {
+    public int girarx(int y) {
         return x1 + y - y1;
     }
 
-    public int turn_AroundY1(int x) {
+    public int girary(int x) {
         return y1 - x + x1;
     }
 

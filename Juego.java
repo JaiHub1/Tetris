@@ -72,19 +72,19 @@ public class Juego extends View implements View.OnClickListener{
                     @Override
                     public void run() {
 
-                       // if(lose()==false ) {
 
-                            tablajuego.moveDown(tablajuego.getCurrentPiece());
 
-                           if (tablajuego.can_Move_Down(tablajuego.getCurrentPiece()) == false) {
-                                int deletedRows = tablajuego.clearRows();
-                                tablajuego.clearRows();
+                            tablajuego.movera(tablajuego.getCurrentPiece());
+
+                           if (tablajuego.moverabaj(tablajuego.getCurrentPiece()) == false) {
+                                int eliminfilas = tablajuego.limpiarf();
+                                tablajuego.limpiarf();
                                 listapieza.remove(tablajuego.getCurrentPiece());
                                 listapieza.add(new figuras(random.nextInt(7) + 1));
 
 
-                                if (deletedRows> 0) {
-                                    puntos.setPuntosac(puntos.getPuntosac() + deletedRows * puntuacion);
+                                if (eliminfilas > 0) {
+                                    puntos.setPuntosac(puntos.getPuntosac() + eliminfilas * puntuacion);
                                     int p = puntos.getPuntosac();
 
 
@@ -94,7 +94,7 @@ public class Juego extends View implements View.OnClickListener{
 
                             }
                             invalidate();
-                        //}
+
                     }
                 });
             }
@@ -104,10 +104,10 @@ public class Juego extends View implements View.OnClickListener{
 
     public boolean lose() {
 
-        if( tablajuego.checklose(tablajuego.getCurrentPiece())==true ) {
+        if( tablajuego.fingame(tablajuego.getCurrentPiece())==true ) {
             tiempo.cancel();
             listapieza.clear();
-            tablajuego.clearGameBoard();
+            tablajuego.limpiartabla();
             mainActivity.setPausar(true);
             pantalla.stop();
             Intent intent = new Intent(this.getContext(), MainActivity2.class);
@@ -130,16 +130,16 @@ public class Juego extends View implements View.OnClickListener{
 
             switch(view.getId()) {
                 case R.id.derecha:
-                    tablajuego.moveRight(tablajuego.getCurrentPiece());
+                    tablajuego.moverD(tablajuego.getCurrentPiece());
                     invalidate();
                     break;
                 case R.id.izquierda:
-                    tablajuego.moveLeft(tablajuego.getCurrentPiece());
+                    tablajuego.moverIz(tablajuego.getCurrentPiece());
                     invalidate();
                     break;
 
                 case R.id.girar:
-                tablajuego.rotatePiece(tablajuego.getCurrentPiece());
+                tablajuego.rotar(tablajuego.getCurrentPiece());
                 invalidate();
                 break;
 
